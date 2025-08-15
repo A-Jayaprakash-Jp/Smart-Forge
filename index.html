@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' capacitor://*; script-src 'self' 'unsafe-eval' 'unsafe-inline' http://127.0.0.1:* http://localhost:* https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://i.pravatar.cc; connect-src 'self' http://localhost:* https://generativelanguage.googleapis.com ws://127.0.0.1:* ws://localhost:* wss://127.0.0.1:* wss://localhost:* https://esm.sh; object-src 'none';">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0M4MTAyRSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzNiODJmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjUwIiBmaWxsPSJ1cmwoI2cpIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNSwgNSkiPjxwYXRoIGQ9Ik0gMzAsMTUgQyAxNSwxNSAxNSw3NSAzMCw3NSBMIDQ1LDc1IEwgNDUsMTUgWiIgZmlsbD0iI0ZGRiIvPjxwYXRoIGQ9Ik0gNDUsMTUgTCA0NSw3NSBMIDcwLDc1IEMgNzAsNzUgODUsNTAgNzAsMTUgWiIgZmlsbD0iI0ZGRiIvPjxjaXJjbGUgY3g9IjM3LjUiIGN5PSI0NSIgcj0iMTAiIGZpbGw9IiMxMTE4MjciLz48L2c+PC9zdmc+" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Forge</title>
+    
+    <!-- PWA Manifest & Themeing -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#111827" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Roboto+Mono:wght@400;500;700&family=Lato:wght@400;700&family=Oswald:wght@400;700&family=Source+Code+Pro:wght@400;700&family=Nunito:wght@400;700&family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Open+Sans:wght@400;700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      .gradient-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+      .dark .gradient-bg {
+         background: #111827;
+      }
+      .light .gradient-bg {
+         background: linear-gradient(300deg, #dbeafe, #ffffff, #fecaca);
+         background-size: 240% 240%;
+         animation: gradient-animation 25s ease infinite;
+      }
+      @keyframes gradient-animation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .glass-card {
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border: 1px solid;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+      .dark .glass-card {
+        background-color: rgba(17, 24, 39, 0.7);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+      .dark .glass-card:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+      }
+      .light .glass-card {
+        background-color: rgba(255, 255, 255, 0.6);
+        border-color: rgba(0, 0, 0, 0.08);
+      }
+      .light .glass-card:hover {
+        border-color: rgba(0, 0, 0, 0.15);
+      }
+      #particle-canvas {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      /* Custom Scrollbars */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      .dark ::-webkit-scrollbar-track {
+        background: rgba(17, 24, 39, 0.5);
+      }
+      .light ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: rgba(128, 128, 128, 0.5);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(128, 128, 128, 0.7);
+      }
+      /* Tailwind Base/Global Styles will be injected here by Vite */
+      @tailwind base;
+      @tailwind components;
+      @tailwind utilities;
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.0.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.0.0/",
+    "react/": "https://esm.sh/react@^19.0.0/",
+    "framer-motion": "https://esm.sh/framer-motion@^11.3.2",
+    "@capacitor/camera": "https://esm.sh/@capacitor/camera@^6.0.1",
+    "@capacitor/cli": "https://esm.sh/@capacitor/cli@^6.1.1",
+    "@capacitor/core": "https://esm.sh/@capacitor/core@^6.1.1",
+    "@capacitor/push-notifications": "https://esm.sh/@capacitor/push-notifications@^6.0.0",
+    "@capacitor/splash-screen": "https://esm.sh/@capacitor/splash-screen@^6.0.0",
+    "@capacitor/status-bar": "https://esm.sh/@capacitor/status-bar@^6.0.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.13.0",
+    "@heroicons/react/": "https://esm.sh/@heroicons/react@^2.1.5/",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^4.3.1",
+    "docx": "https://esm.sh/docx@^8.5.0",
+    "file-saver": "https://esm.sh/file-saver@^2.0.5",
+    "jspdf": "https://esm.sh/jspdf@^2.5.1",
+    "jspdf-autotable": "https://esm.sh/jspdf-autotable@^3.8.2",
+    "recharts": "https://esm.sh/recharts@^2.12.7",
+    "uuid": "https://esm.sh/uuid@^9.0.1",
+    "vite": "https://esm.sh/vite@^5.3.3",
+    "xlsx": "https://esm.sh/xlsx@^0.18.5",
+    "dotenv": "https://esm.sh/dotenv@^17.2.1",
+    "express": "https://esm.sh/express@^5.1.0",
+    "cors": "https://esm.sh/cors@^2.8.5",
+    "mongodb": "https://esm.sh/mongodb@^6.18.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script nomodule>
+      document.getElementById('root').innerHTML = '<div style="font-family: sans-serif; text-align: center; padding: 2rem;"><h1>Browser Not Supported</h1><p>This application requires a modern browser with JavaScript module support. Please update your browser to continue.</p></div>';
+    </script>
+    <script>
+      let animationFrameId;
+      const setupAndStartAnimation = () => {
+        const canvas = document.createElement('canvas');
+        canvas.id = 'particle-canvas';
+        const gradientBg = document.querySelector('.gradient-bg');
+        if (!gradientBg || document.getElementById('particle-canvas')) {
+          return; // Already setup or no container
+        }
+        gradientBg.appendChild(canvas);
+        
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        const setup = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            const particleCount = Math.floor(canvas.width / 15);
+            for(let i=0; i<particleCount; i++){
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: Math.random() * 0.3 - 0.15,
+                    vy: Math.random() * 0.3 - 0.15,
+                    radius: Math.random() * 1.5 + 0.5,
+                    alpha: Math.random() * 0.5 + 0.2
+                });
+            }
+        };
+
+        const draw = () => {
+            if (!document.body.classList.contains('dark')) {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              return;
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+                ctx.fill();
+                
+                particles.forEach(p2 => {
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if(dist < 120){
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.15 - dist/1000})`;
+                        ctx.stroke();
+                    }
+                });
+            });
+        };
+
+        
+        const animate = () => {
+            draw();
+            animationFrameId = requestAnimationFrame(animate);
+        };
+        
+        window.addEventListener('resize', setup);
+        setup();
+        animate();
+      };
+      
+      const stopAnimation = () => {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+          const canvas = document.getElementById('particle-canvas');
+          if (canvas) {
+            canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.remove();
+          }
+        }
+      };
+
+      const observer = new MutationObserver(() => {
+          const isDark = document.body.classList.contains('dark');
+          if (isDark) {
+              if (!animationFrameId) {
+                setupAndStartAnimation();
+              }
+          } else {
+              stopAnimation();
+          }
+      });
+
+      observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+      // Initial check
+      if (document.body.classList.contains('dark')) {
+          setupAndStartAnimation();
+      }
+
+      // PWA Service Worker Registration
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+  </script>
+  </body>
+</html>

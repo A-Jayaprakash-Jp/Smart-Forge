@@ -1,0 +1,9 @@
+{
+  "name": "Smart Forge",
+  "description": "An intelligent platform for the modern foundry, providing real-time data, predictive insights, and seamless collaboration.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "prompt": ""
+}
